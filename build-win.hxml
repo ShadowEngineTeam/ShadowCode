@@ -1,0 +1,7 @@
+--class-path source
+--main Main
+--cpp export/win
+--library hxwebview
+--dce full
+--macro macros.AssetsMacro.build()
+-D HXCPP_M64
