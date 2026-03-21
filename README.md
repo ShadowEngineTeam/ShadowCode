@@ -1,5 +1,5 @@
 # Monaco
-An implementation of the Monaco Editor (using [monaco-vscode-api](https://github.com/CodinGame/monaco-vscode-api)) into a webview with functionallity for the [Haxe Language Server](https://github.com/vshaxe/haxe-language-server) and local workspaces.
+An implementation of the Monaco Editor (using [monaco-vscode-api](https://github.com/CodinGame/monaco-vscode-api)) into a webview with functionality for the [Haxe Language Server](https://github.com/vshaxe/haxe-language-server) and local workspaces.
 
 # Building The Client
 The editor is written in JS because that's what Monaco Editor uses.
@@ -26,6 +26,30 @@ Haxe Language Server is written in Haxe (wow) then compiled to nodejs. We also b
 
 ## Building
 I have no fucking clue how to build that shit it always gave me errors so i just copied the language server from the vscode extension :pray:
+But generally it should be like this:
+First clone the repository
+
+```bash
+git clone https://github.com/vshaxe/haxe-language-server
+cd haxe-language-server
+```
+
+Then create a newrepo inside of it so the libraries aren't downloaded globally but inside of a local `.haxelib` foldder using:
+```bash
+haxelib newrepo
+```
+
+Then install the libraries using the state file:
+```bash
+haxelib state load install.hxml
+```
+
+Then finally run the build
+```bash
+haxe build.hxml
+```
+
+If it compiled for you then congrats the output should supposedly be in `bin/server.js` relative to the build.hxml. You might want to move it to `client/haxe/server.js`.
 
 ## Bundling
 Using the npm [@yao-pkg/pkg](https://github.com/yao-pkg/pkg) library you can pack the compiled `server.js` into a binary for Windows, Linux or Mac.
