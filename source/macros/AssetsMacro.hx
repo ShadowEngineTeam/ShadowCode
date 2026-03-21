@@ -1,6 +1,7 @@
 package macros;
 
 #if macro
+import haxe.macro.Compiler;
 import haxe.macro.Context;
 import haxe.io.Path;
 import sys.io.File;
@@ -12,6 +13,15 @@ class AssetsMacro
 
     public static function build()
     {
+        var output = Compiler.getOutput();
+
+        var outputBin:String = Path.join([output, 'bin']);
+        if (!FileSystem.exists(outputBin))
+            FileSystem.createDirectory(outputBin);
+
+        for (file in FileSystem.readDirectory('bin'))
+            File.copy('bin/$file', Path.join([outputBin, file]));
+
         embedAssets(MONACO_ASSETS_FOLDER);
     }
 

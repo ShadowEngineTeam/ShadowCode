@@ -69,9 +69,14 @@ class MonacoServer
 			}
 
 			var path:String = requestLine.split(" ")[1];
-			if (!path.startsWith('/')) path = '/' + path;
+			if (!path.startsWith('/'))
+				path = '/' + path;
+
+			var queryIndex = path.indexOf('?');
+			if (queryIndex != -1)
+				path = path.substr(0, queryIndex);
 			var absolutePath:String = root + path;
-            
+
 			if (!exists(absolutePath))
 			{
 				sendError(client);
@@ -80,13 +85,12 @@ class MonacoServer
 
 			var data:Null<Bytes> = getData(absolutePath);
 			var contentType:String = getMime(absolutePath);
-			
+
 			if (data == null)
 			{
 				sendError(client);
 				return;
 			}
-
 
 			var header = formatData(data, contentType);
 
@@ -116,23 +120,33 @@ class MonacoServer
 		}
 	}
 
-    private static inline function exists(file:String):Bool
-    {
-        return FileSystem.exists(file) || Resource.listNames().contains(file);
-    }
+	private static inline function exists(file:String):Bool
+	{
+		return FileSystem.exists(file) || Resource.listNames().contains(file);
+	}
 
-    private static inline function getData(file:String):Null<Bytes>
-    {
-        if (FileSystem.exists(file)) return File.getBytes(file);
+	private static inline function getData(file:String):Null<Bytes>
+	{
+		if (FileSystem.exists(file))
+		{
+			trace('Serving file from file system: $file');
+			return File.getBytes(file);
+		}
+		trace('Serving file from resources: ${file}');
+		return Resource.getBytes(file);
+	}
 
-        return Resource.getBytes(file);
-    }
-
-    private static inline function formatData(data:Bytes, mime:String):String
-    {
-	    return "HTTP/1.1 200 OK\r\n" + "Content-Type: " + mime + "\r\n" + "Content-Length: " + data.length + "\r\n"
-            + "Connection: close\r\n\r\n";
-    }
+	private static inline function formatData(data:Bytes, mime:String):String
+	{
+		return "HTTP/1.1 200 OK\r\n"
+			+ "Content-Type: "
+			+ mime
+			+ "\r\n"
+			+ "Content-Length: "
+			+ data.length
+			+ "\r\n"
+			+ "Connection: close\r\n\r\n";
+	}
 
 	private static function sendError(client:Socket):Void
 	{
