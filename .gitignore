@@ -3,5 +3,5 @@ export/*
 *.code-workspace
 vs_Community.exe
 .DS_Store
-lsp-client/node_modules/*
+client/node_modules/*
 haxe-language-server/*
