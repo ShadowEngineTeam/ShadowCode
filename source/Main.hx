@@ -35,9 +35,9 @@ class Main
 	private static function loadMonaco():Void
 	{
 		var appCwd = Sys.getCwd();
-		var cwd:String = Path.join([appCwd, 'template']);
-		var hxml:String = Path.join([appCwd, 'template', 'build.hxml']);
-		var name:String = 'test';
+		var cwd:String = Path.join([appCwd, 'cppia-template']);
+		var hxml:String = Path.join([cwd, 'build.hxml']);
+		var name:String = 'cppia template';
 		MonacoLoader.load(true, cwd, hxml, name);
 	}
 
