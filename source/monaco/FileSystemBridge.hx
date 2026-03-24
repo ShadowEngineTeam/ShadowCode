@@ -170,7 +170,11 @@ class FileSystemBridge
 
 	private static function resolvePath(path:String):String
 	{
+		// trace('got path: $path');
 		path = path.applyBackslashes();
-		return Path.isAbsolute(path) ? path : Path.join([cwd, path]);
+		// trace('added backslashes: $path');
+		path = Path.isAbsolute(path) ? path : Path.join([cwd, path]);
+		// trace('abs path: $path');
+		return path;
 	}
 }

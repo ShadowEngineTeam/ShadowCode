@@ -10,10 +10,11 @@ class Util
 	public static function initCustomTrace():Void
 	{
 		#if (desktop && sys)
-		haxe.Log.trace = function(v:Dynamic, ?infos:PosInfos):Void
+		haxe.Log.trace = function(v:Dynamic, ?infos:haxe.PosInfos):Void
 		{
+			if (infos == null) return;
 			var str = haxe.Log.formatOutput(v, infos);
-			Sys.stdout().writeString(str);
+			Sys.stdout().writeString(str + '\n');
 			Sys.stdout().flush();
 		};
 		#end
