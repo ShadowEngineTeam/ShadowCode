@@ -213,6 +213,34 @@ async function preRegisterHaxeLanguage() {
     );
 }
 
+async function preRegisterVsSetiIconTheme() {
+    const { registerFileUrl } = registerExtension({
+        name: 'theme-seti',
+        publisher: 'vscode',
+        version: '1.0.0',
+        engines: { vscode: '*' },
+        contributes: {
+            iconThemes: [{
+                id: 'vs-seti',
+                label: 'VS Seti',
+                path: './icons/vs-seti-icon-theme.json'
+            }]
+        }
+    }, undefined, { system: true });
+
+    // These assets are served from the monaco web server root:
+    //   /vs-seti/icons/vs-seti-icon-theme.json
+    //   /vs-seti/icons/seti.woff
+    const themeUrl = new URL('/vs-seti/icons/vs-seti-icon-theme.json', window.location.href).toString();
+    const fontUrl = new URL('/vs-seti/icons/seti.woff', window.location.href).toString();
+
+    // Map the extension's internal paths to real URLs.
+    // The icon theme JSON references `./seti.woff` (relative to itself),
+    // which becomes `./icons/seti.woff` after resolution.
+    registerFileUrl('./icons/vs-seti-icon-theme.json', themeUrl);
+    registerFileUrl('./icons/seti.woff', fontUrl, 'font/woff');
+}
+
 function postRegisterHaxeLanguage() {
     monaco.languages.setLanguageConfiguration('haxe', {
         comments: { lineComment: '//', blockComment: ['/*', '*/'] },
@@ -267,6 +295,7 @@ async function main() {
     const hxml = params.get('hxml');
     const cwdForward = cwd.replace(/\\/g, '/').replace(/\/$/, '');
 
+    await preRegisterVsSetiIconTheme();
     await preRegisterHaxeLanguage();
 
     const container = document.getElementById('workbench');
@@ -295,6 +324,7 @@ async function main() {
         'window.commandCenter': true,
         'window.menuBarVisibility': 'classic',
         'workbench.activityBar.location': 'default',
+        'workbench.iconTheme': 'vs-seti',
         'window.title': `${workspaceName}\${separator}\${dirty}\${activeEditorShort}`,
         'files.exclude': {
             '*.code-workspace': true,
