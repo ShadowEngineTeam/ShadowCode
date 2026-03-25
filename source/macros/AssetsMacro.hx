@@ -9,7 +9,7 @@ import sys.FileSystem;
 
 class AssetsMacro
 {
-    public static final MONACO_ASSETS_FOLDER:String = 'monaco';
+    public static final MONACO_ASSETS_FOLDER:String = 'shadowcode';
 
     public static function build()
     {

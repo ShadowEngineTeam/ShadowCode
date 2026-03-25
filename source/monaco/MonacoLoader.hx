@@ -15,10 +15,10 @@ class MonacoLoader
 
 	public static function load(debug:Bool = false, cwd:String, hxml:String, ?workspaceName:String):Void
 	{
-		MonacoServer.startServer('monaco');
+		MonacoServer.startServer('shadowcode');
 
 		webview = new WebView(debug);
-		webview.setTitle('Monaco Editor');
+		webview.setTitle('Shadow Code');
 		webview.setSize(1280, 720, NONE);
 		HaxeLanguageServer.init();
 		FileSystemBridge.init(cwd);
