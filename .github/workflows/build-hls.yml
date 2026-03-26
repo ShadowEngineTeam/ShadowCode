@@ -24,7 +24,7 @@ jobs:
           node-version: latest
 
       - name: Install pkg
-        run: npm install -g pkg
+        run: npm install -g @yao-pkg/pkg
 
       - name: Build binaries (Windows)
         if: runner.os == 'Windows'
