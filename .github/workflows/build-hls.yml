@@ -35,7 +35,6 @@ jobs:
           New-Item -ItemType Directory -Force -Path bin\win | Out-Null
           New-Item -ItemType Directory -Force -Path $env:PKG_CACHE_PATH | Out-Null
           pkg language-servers/haxe/server.js --targets node22-win-x64   --output bin/win/haxe-language-server-x64
-          pkg language-servers/haxe/server.js --targets node22-win-arm64  --output bin/win/haxe-language-server-arm64
 
       - name: Zip artifacts (Windows)
         if: runner.os == 'Windows'
@@ -43,7 +42,6 @@ jobs:
         run: |
           cd bin\win
           7z a haxe-language-server-win-x64.zip   haxe-language-server-x64.exe
-          7z a haxe-language-server-win-arm64.zip  haxe-language-server-arm64.exe
 
       - name: Upload Windows x64
         if: runner.os == 'Windows'
@@ -52,12 +50,12 @@ jobs:
           name: haxe-language-server-win-x64
           path: bin/win/haxe-language-server-win-x64.zip
 
-      - name: Upload Windows arm64
-        if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: haxe-language-server-win-arm64
-          path: bin/win/haxe-language-server-win-arm64.zip
+      # - name: Upload Windows arm64
+      #   if: runner.os == 'Windows'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: haxe-language-server-win-arm64
+      #     path: bin/win/haxe-language-server-win-arm64.zip
 
       - name: Build binaries (Linux)
         if: runner.os == 'Linux'
@@ -147,7 +145,6 @@ jobs:
         run: |
           mkdir -p bin/win
           unzip -o artifacts/haxe-language-server-win-x64/haxe-language-server-win-x64.zip -d bin/win/
-          unzip -o artifacts/haxe-language-server-win-arm64/haxe-language-server-win-arm64.zip -d bin/win/
 
       - name: Unzip Linux artifacts
         run: |
