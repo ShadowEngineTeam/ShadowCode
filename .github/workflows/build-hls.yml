@@ -62,6 +62,8 @@ jobs:
       - name: Build binaries (Linux)
         if: runner.os == 'Linux'
         run: |
+          sudo apt update
+          sudo apt install qemu-user-binfmt
           mkdir -p bin/linux
           pkg language-servers/haxe/server.js --targets node22-linuxstatic-x64 --output bin/linux/haxe-language-server-x64
           pkg language-servers/haxe/server.js --targets node22-linuxstatic-arm64 --output bin/linux/haxe-language-server-arm64
