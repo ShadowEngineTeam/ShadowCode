@@ -28,19 +28,22 @@ jobs:
 
       - name: Build binaries (Windows)
         if: runner.os == 'Windows'
-        shell: bash
+        shell: pwsh
+        env:
+          PKG_CACHE_PATH: ${{ runner.temp }}\pkg-cache
         run: |
-          mkdir -p bin/win
-          pkg language-servers/haxe/server.js --targets node22-win-x64 --output bin/win/haxe-language-server-x64
-          pkg language-servers/haxe/server.js --targets node22-win-arm64 --output bin/win/haxe-language-server-arm64
+          New-Item -ItemType Directory -Force -Path bin\win | Out-Null
+          New-Item -ItemType Directory -Force -Path $env:PKG_CACHE_PATH | Out-Null
+          pkg language-servers/haxe/server.js --targets node22-win-x64   --output bin/win/haxe-language-server-x64
+          pkg language-servers/haxe/server.js --targets node22-win-arm64  --output bin/win/haxe-language-server-arm64
 
       - name: Zip artifacts (Windows)
         if: runner.os == 'Windows'
-        shell: bash
+        shell: pwsh
         run: |
-          cd bin/win
-          7z a haxe-language-server-win-x64.zip haxe-language-server-x64.exe
-          7z a haxe-language-server-win-arm64.zip haxe-language-server-arm64.exe
+          cd bin\win
+          7z a haxe-language-server-win-x64.zip   haxe-language-server-x64.exe
+          7z a haxe-language-server-win-arm64.zip  haxe-language-server-arm64.exe
 
       - name: Upload Windows x64
         if: runner.os == 'Windows'
