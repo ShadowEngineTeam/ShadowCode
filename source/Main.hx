@@ -15,6 +15,14 @@ static volatile sig_atomic_t shouldExit = 0;
 ')
 class Main
 {
+	#if windows
+	private static function __init__()
+	{
+		if (!Util.isWebView2Installed())
+			Util.webView2Alert();
+	}
+	#end
+
 	public static function main()
 	{
 		Util.initCustomTrace();
