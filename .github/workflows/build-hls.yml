@@ -166,6 +166,7 @@ jobs:
         run: |
           mkdir -p bin/win
           unzip -o artifacts/haxe-language-server-win-x64/haxe-language-server-win-x64.zip -d bin/win/
+          unzip -o artifacts/haxe-language-server-win-arm64/haxe-language-server-win-arm64.zip -d bin/win/
 
       - name: Unzip Linux artifacts
         run: |
