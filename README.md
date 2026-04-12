@@ -73,7 +73,6 @@ pkg language-servers/haxe/server.js --targets node22-win-arm64 --output bin/win/
 ```bash
 pkg language-servers/haxe/server.js --targets node22-linuxstatic-x64 --output bin/linux/haxe-language-server-x64
 pkg language-servers/haxe/server.js --targets node22-linuxstatic-arm64 --output bin/linux/haxe-language-server-arm64
-pkg language-servers/haxe/server.js --targets node22-linuxstatic-armv7 --output bin/linux/haxe-language-server-armv7
 ```
 
 ### macOS
